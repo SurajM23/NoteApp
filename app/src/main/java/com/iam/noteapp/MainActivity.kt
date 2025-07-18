@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iam.noteapp.module.Note
+import com.iam.noteapp.screens.NoteScreen
 import com.iam.noteapp.ui.theme.NoteAppTheme
 import com.iam.noteapp.viewModel.NoteViewModel
 import com.iam.noteapp.views.NoteGridView
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NotesApp()
+                    NoteScreen(viewModel)
                 }
             }
         }
@@ -55,70 +56,6 @@ class MainActivity : ComponentActivity() {
     @Preview(showBackground = true, showSystemUi = true)
     @Composable()
     fun GreetingPreview() {
-        NotesApp()
-    }
-
-    @Composable
-    fun NotesApp() {
-        var noteText by remember { mutableStateOf("") }
-        var notes by remember { mutableStateOf(mutableListOf<Note>()) }
-
-        viewModel.notes.observe(this) {
-            notes = it.toMutableList()
-        }
-
-        viewModel.loadNotes()
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            NoteGridView(
-                notes = notes,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextField(
-                    value = noteText,
-                    onValueChange = { noteText = it },
-                    placeholder = { Text("Enter note...") },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                    maxLines = 4,
-                    singleLine = false
-                )
-
-                IconButton(
-                    onClick = {
-                        if (noteText.isNotBlank()) {
-                            val note = Note(
-                                title = "Note ${notes.size + 1}",
-                                des = noteText
-                            )
-                            notes.add(note)
-                            noteText = ""
-                            viewModel.addNote(note)
-                        }
-                    },
-                    modifier = Modifier.size(48.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Send,
-                        contentDescription = "Send"
-                    )
-                }
-            }
-        }
+        NoteScreen(viewModel)
     }
 }
