@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias (libs.plugins.hilt.application)
     id 'kotlin-kapt'
 }
 
@@ -74,5 +75,7 @@ dependencies {
     // Optional - Testing
     testImplementation libs.androidx.room.testing
 
-
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.hilt.navigation.compose)
 }

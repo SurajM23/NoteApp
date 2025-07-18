@@ -30,14 +30,13 @@ import androidx.compose.ui.unit.dp
 import com.iam.noteapp.module.Note
 import com.iam.noteapp.ui.theme.NoteAppTheme
 import com.iam.noteapp.viewModel.NoteViewModel
-import com.iam.noteapp.viewModel.NoteViewModelFactory
 import com.iam.noteapp.views.NoteGridView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: NoteViewModel by viewModels {
-        NoteViewModelFactory(this)  // 'this' is the Context
-    }
+    private val viewModel: NoteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

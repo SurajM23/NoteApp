@@ -1,22 +1,16 @@
 package com.iam.noteapp.repo
 
-import android.content.Context
-import com.iam.noteapp.db.NoteDatabase
 import com.iam.noteapp.module.Note
 
-class NoteRepository(context: Context) {
-    private val db = NoteDatabase.getInstance(context)
-    private val dao = db.noteDao()
+import com.iam.noteapp.db.NoteDao
+import javax.inject.Inject
 
-    suspend fun insert(note: Note) {
-        dao.insert(note)
-    }
+class NoteRepository @Inject constructor(
+    private val noteDao: NoteDao
+) {
+    suspend fun insert(note: Note) = noteDao.insert(note)
 
-    suspend fun getAllNotes(): List<Note> {
-        return dao.getAllNotes()
-    }
+    suspend fun getAllNotes(): List<Note> = noteDao.getAllNotes()
 
-    suspend fun delete(note: Note) {
-        dao.delete(note)
-    }
+    suspend fun delete(note: Note) = noteDao.delete(note)
 }
